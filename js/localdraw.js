@@ -48,7 +48,7 @@ var DrawingBoard = ( function(){
         position.y = y ;
     };
     var draw = function (thisContext, fromX, fromY, toX, toY) {
-        if (!isDrawing) return;
+        //if (!isDrawing) return;
 
         thisContext.beginPath();
         thisContext.moveTo(fromX, fromY);
@@ -57,7 +57,7 @@ var DrawingBoard = ( function(){
     };
     var erase = function (thisContext,x,y){
 
-        if( !isClearing ) return ;
+        //if( !isClearing ) return ;
 
         var eraserDiameter = 20 ;
         thisContext.save();
@@ -186,6 +186,7 @@ var DrawingBoard = ( function(){
     this.clearDrawing = clearDrawing;
     this.getLineSpec = getLineSpec;
     this.pad = pad ;
+    this.context = ctx ;
 
     return this ;
 
