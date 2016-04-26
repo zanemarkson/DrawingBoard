@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Interactive Drawing Board Client UI</title>
+    <meta name="description" content="An Interactive Drawing Board">
+    <meta name="author" content="Zheng Ma">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+
+</head>
+
+<!--
+<body ng-app="drawingBoardApp" ng-controller="drawingBoardController as dbc">
+-->
+
+<body>
+
+    <!--<div ng-class="blurAtLogin">-->
+    <div id="boardContainer">
+        <canvas id="drawingPad" style="border: 1px solid #ccc"></canvas>
+        <div>
+            <input type="color" id="user-color-choice" placeholder="Please enter color" onchange="DrawingBoard.getLineSpec()">
+            <input type="number" min="0.5" max="25" step="0.5" id="user-linewidth-choice" placeholder="Please enter LineWidth: 10" onchange="DrawingBoard.getLineSpec()">
+            <!-- <input type="button" id="change-color" value="Submit" onclick="getLineSpec()"> -->
+            <input type="button" id="clear-drawing" value="Clear" onclick="DrawingBoard.clearDrawing()">
+        </div>
+    </div>
+
+
+
+    <script src="js/localdraw.js"></script>
+
+
+    <!--
+
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.10/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.10/angular-route.js"></script>
+    <script src="js/remote.js"></script>
+    -->
+
+</body>
+</html>
