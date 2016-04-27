@@ -28,21 +28,27 @@
             <input type="number" min="0.5" max="25" step="0.5" id="user-linewidth-choice" placeholder="Please enter LineWidth: 10" onchange="DrawingBoard.getLineSpec()">
             <!-- <input type="button" id="change-color" value="Submit" onclick="getLineSpec()"> -->
             <input type="button" id="clear-drawing" value="Clear" onclick="DrawingBoard.clearDrawing()">
+            <input type="button" id="connect" value="Connect" onclick="Remote.submitKey('fullstack')">
+            <input type="button" id="disconnect" value="Disconnect/View Only" onclick="Remote.localOnly()">
         </div>
     </div>
 
 
 
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script src="js/localdraw.js"></script>
+    <script src="js/remotedraw.js"></script>
 
 
     <!--
 
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.10/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.10/angular-route.js"></script>
-    <script src="js/remote.js"></script>
     -->
+
+
+
 
 </body>
 </html>

@@ -83,17 +83,21 @@ var DrawingBoard = ( function(){
     // Mouse Motion
     pad.onmousedown = function(evt){
 
+        console.log('MouseDown');
+
         pos(evt.clientX, evt.clientY);
 
         if( evt.button == 0 ){
             isDrawing = true ;
             isClearing = false ;
+            pad.style.cursor = "default" ;
         }
         else if( evt.button == 2 ){
             isDrawing = false ;
             isClearing = true ;
             //pad.style.cursor = 'url("assets/img/eraser.png") ' + eraserDiameter + ' ' + eraserDiameter + ', auto';
             //pad.style.cursor = 'url("assets/img/sponge.png") ';
+            pad.style.cursor = "crosshair" ;
             erase(ctx, position.x, position.y ) ;
         }
     };
@@ -101,19 +105,27 @@ var DrawingBoard = ( function(){
         if ( isDrawing == true && isClearing == false ){
             draw(ctx, position.x, position.y, evt.clientX, evt.clientY);
             pos(evt.clientX, evt.clientY);
+            pad.style.cursor = "default" ;
         }
         else if ( isDrawing == false && isClearing == true ){
             pos(evt.clientX, evt.clientY);
             //pad.style.cursor = 'url("assets/img/eraser.png") ' + eraserDiameter + ' ' + eraserDiameter + ', auto';
             //pad.style.cursor = 'url("assets/img/sponge.png") ';
+            pad.style.cursor = "crosshair" ;
             erase(ctx, position.x, position.y ) ;
         }
         else{
             pos( evt.clientX, evt.clientY);
         }
     };
-    pad.onmouseup = pauseDrawing;
-    pad.onmouseout = pauseDrawing ;
+    pad.onmouseup = function(){
+        pauseDrawing();
+        pad.style.cursor = "default" ;
+    };
+    pad.onmouseout = function(){
+        pauseDrawing();
+        pad.style.cursor = "default" ;
+    } ;
     pad.oncontextmenu = function() { return false; };
 
     // Touch Support
@@ -181,7 +193,8 @@ var DrawingBoard = ( function(){
 
     this.draw = draw;
     this.erase = erase;
-    //this.pos = pos;
+    this.pauseDrawing = pauseDrawing;
+    this.position = position ;
     this.config = config;
     this.clearDrawing = clearDrawing;
     this.getLineSpec = getLineSpec;

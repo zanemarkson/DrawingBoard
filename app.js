@@ -38,42 +38,11 @@ var presentation = io.on('connection', function (socket) {
 
 	socket.on('load', function(data){
 
+		console.log(data);
+
 		socket.emit('access', {
 			access: (data.key === secret ? "granted" : "denied")
 		});
-
-	});
-
-	// Clients send the 'slide-changed' message whenever they navigate to a new slide.
-
-	socket.on('slide-changed', function(data){
-
-		// Check the secret key again
-
-		if(data.key === secret) {
-
-			// Tell all connected clients to navigate to the new slide
-			
-			presentation.emit('navigate', {
-				hash: data.hash
-			});
-		}
-
-	});
-
-	socket.on('state-changed', function(data){
-
-		// Check the secret key again
-
-		if(data.key === secret) {
-
-			// Tell all connected clients to navigate to the new slide
-
-			presentation.emit('navigate', {
-				//hash: data.hash
-                state: data.state
-			});
-		}
 
 	});
 
@@ -96,6 +65,8 @@ var presentation = io.on('connection', function (socket) {
         if(data.key === secret) {
 
             // Tell all connected clients to navigate to the new slide
+
+            console.log(data) ;
 
             presentation.emit('keep-drawing', data);
         }
