@@ -83,8 +83,6 @@ var DrawingBoard = ( function(){
     // Mouse Motion
     pad.onmousedown = function(evt){
 
-        console.log('MouseDown');
-
         pos(evt.clientX, evt.clientY);
 
         if( evt.button == 0 ){

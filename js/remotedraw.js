@@ -7,7 +7,7 @@ var Remote = ( function(){
 
     var key="fullstack";
     var submitKey = function (key) {
-        socket = io();
+        // socket = io();
         if(key.length) {
             socket.emit('load', {
                 key: key
