@@ -1,3 +1,4 @@
 #ignore Webstorm .idea
 /.idea
+/node_modules
 

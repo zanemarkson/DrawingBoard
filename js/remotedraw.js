@@ -110,7 +110,10 @@ var Remote = ( function(){
                         y: position.y,
                         w: window.innerWidth,
                         h: window.innerHeight,
-                        button: 0
+                        button: 0,
+                        color: DrawingBoard.context.strokeStyle,
+                        lineWidth: DrawingBoard.context.lineWidth
+
                     });
                 }
                 else if(isClearing)
@@ -131,6 +134,8 @@ var Remote = ( function(){
 
                 if(data.button == 0) {
                     //RevealChalkboard.drawingCanvas.canvas.style.cursor = 'url("' + path + 'img/boardmarker.png") ' + ' auto';
+                    DrawingBoard.context.strokeStyle = data.color;
+                    DrawingBoard.context.lineWidth = data.lineWidth;
                     DrawingBoard.draw(DrawingBoard.context, position.x, position.y, data.x / data.w * window.innerWidth, data.y / data.h * window.innerHeight);
                 }
                 else if(data.button == 2) {
@@ -144,7 +149,7 @@ var Remote = ( function(){
             var pauseDrawing = function () {
                 isDrawing = false ;
                 isClearing = false ;
-            }
+            };
 
 
             // DrawingBoard.pad.onmousedown = sendPosition ;
