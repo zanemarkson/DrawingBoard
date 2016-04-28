@@ -12,6 +12,8 @@ var express = require('express'),
 
 var port = process.env.PORT || 8080;
 
+var randomRoom = require('random-string');
+
 // Initialize a new socket.io object. It is bound to 
 // the express app, which allows them to coexist.
 
@@ -38,11 +40,24 @@ var presentation = io.on('connection', function (socket) {
 
 	socket.on('load', function(data){
 
-		console.log(data);
+        console.log('User from ' + socket.handshake.address + ' just joined ...') ;
+        console.log(data);
 
-		socket.emit('access', {
-			access: (data.key === secret ? "granted" : "denied")
-		});
+        if(data.key === secret){
+            var thisRoom = data.room || randomRoom({length: 7}) ;
+            socket.emit('access', {
+                access: "granted",
+                room: thisRoom
+            });
+            socket.join(thisRoom) ;
+        }
+        else{
+            socket.emit('access', {
+                access: "denied",
+                room: "black-hole"
+            });
+        }
+
 
 	});
 
@@ -56,7 +71,7 @@ var presentation = io.on('connection', function (socket) {
 
             console.log(data);
 
-            presentation.emit('get-to-position', data);
+            presentation.in(data.room).emit('get-to-position', data);
         }
     });
 
@@ -68,7 +83,7 @@ var presentation = io.on('connection', function (socket) {
 
             console.log(data) ;
 
-            presentation.emit('keep-drawing', data);
+            presentation.in(data.room).emit('keep-drawing', data);
         }
     });
 
@@ -78,7 +93,7 @@ var presentation = io.on('connection', function (socket) {
 
 			// Tell all connected clients to navigate to the new slide
 
-			presentation.emit('keep-clearing', data);
+			presentation.in(data.room).emit('keep-clearing', data);
 		}
 	});
     
@@ -87,8 +102,12 @@ var presentation = io.on('connection', function (socket) {
 
             // Tell all connected clients to navigate to the new slide
 
-            presentation.emit('clear-drawing');
+            presentation.in(data.room).emit('clear-drawing');
         }
+    });
+
+    socket.on('disconnect', function () {
+        console.log('User from ' + socket.handshake.address + ' just disconnected ...') ;
     });
 
 

@@ -4,13 +4,24 @@ var Remote = ( function(){
 // Connect the socket
 
     var socket = io();
+    
 
     var key="fullstack";
+    var currentRoom = 'testdraw';
+
     var submitKey = function (key) {
         // socket = io();
+        if(socket){
+            // socket = io.connect('http://localhost:8080');
+            socket.connect();
+        }
+
+        currentRoom = document.getElementById('channel-name').value || currentRoom ;
+
         if(key.length) {
             socket.emit('load', {
-                key: key
+                key: key,
+                room: currentRoom
             });
         }
     };
@@ -36,6 +47,8 @@ var Remote = ( function(){
 
             // ---> Remote Note Part <--- //
 
+            currentRoom = data.room ;
+
             var isTouch = function (event){
                 var type = event.type;
                 return type.indexOf('touch') >= 0;
@@ -46,6 +59,8 @@ var Remote = ( function(){
             var ignorDrawing = true ;
             var position = {};
             var remoteTouchTimeout = null ;
+
+            // var privateSocket = io('/'+data.room);
 
             var sendPosition = function(event){
                 if(isTouch(event)){
@@ -58,7 +73,8 @@ var Remote = ( function(){
                         y: position.y,
                         w: window.innerWidth,
                         h: window.innerHeight,
-                        button: event.button
+                        button: event.button,
+                        room: currentRoom
                     });
                 }
                 else{
@@ -80,7 +96,8 @@ var Remote = ( function(){
                         y: position.y,
                         w: window.innerWidth,
                         h: window.innerHeight,
-                        button: event.button
+                        button: event.button,
+                        room: currentRoom
                     });
                 }
             };
@@ -112,7 +129,8 @@ var Remote = ( function(){
                         h: window.innerHeight,
                         button: 0,
                         color: DrawingBoard.context.strokeStyle,
-                        lineWidth: DrawingBoard.context.lineWidth
+                        lineWidth: DrawingBoard.context.lineWidth,
+                        room: currentRoom
 
                     });
                 }
@@ -124,7 +142,8 @@ var Remote = ( function(){
                         y: position.y,
                         w: window.innerWidth,
                         h: window.innerHeight,
-                        button: 2
+                        button: 2,
+                        room: currentRoom
                     });
                 }
             };
@@ -195,7 +214,8 @@ var Remote = ( function(){
                 clearTimeout(remoteTouchTimeout);
                 remoteTouchTimeout = null ;
                 socket.emit('all-clear', {
-                    key: key
+                    key: key,
+                    room: currentRoom
                 });
             });
 
